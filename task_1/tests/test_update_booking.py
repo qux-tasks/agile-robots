@@ -13,7 +13,7 @@ def test_update_booking_success(auth_token, booking_id):
     headers = {"Content-Type": "application/json", "Cookie": f"token={auth_token}"}
     response = requests.put(f"{config_parser.booking_endpoint}/{booking_id}", json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert body["firstname"] == payload["firstname"], f"Booking firstname was not updated: {body["firstname"]}"
     assert body["lastname"] == payload["lastname"], f"Booking lastname was not updated: {body["lastname"]}"
@@ -41,7 +41,7 @@ def test_update_booking_with_basic_auth(booking_id):
     }
     response = requests.put(f"{config_parser.booking_endpoint}/{booking_id}", json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert body["firstname"] == "Mike", f"Booking firstname was not updated with basic auth"
 
@@ -50,7 +50,7 @@ def test_update_booking_not_found(auth_token):
         Negative case - update non-existent booking
     """
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
-    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     existing_ids_length = len(get_all_booking_ids.json())
 
     payload = build_booking_payload()

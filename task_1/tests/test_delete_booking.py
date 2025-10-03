@@ -45,7 +45,7 @@ def test_delete_non_existing_booking(auth_token):
     headers = {"Content-Type": "application/json", "Cookie": f"token={auth_token}"}
 
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
-    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     existing_ids_length = len(get_all_booking_ids.json())
 
     response = requests.delete(f"{config_parser.booking_endpoint}/{existing_ids_length + 99999999999}", headers=headers)
