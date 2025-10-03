@@ -9,7 +9,7 @@ def test_get_all_booking_ids():
         Positive case without filters to get all booking IDs
     """
     response = requests.get(config_parser.booking_endpoint)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
@@ -24,7 +24,7 @@ def test_get_booking_ids_by_name():
     """
     params = {"firstname": "Josh", "lastname": "Allen"}
     response = requests.get(config_parser.booking_endpoint, params=params)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
@@ -39,7 +39,7 @@ def test_get_booking_ids_by_checkin_checkout():
     """
     params = {"checkin": "2014-03-13", "checkout": "2014-05-21"}
     response = requests.get(config_parser.booking_endpoint, params=params)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
@@ -59,7 +59,7 @@ def test_get_booking_ids_combined_filters():
         "checkout": "2014-05-21"
     }
     response = requests.get(config_parser.booking_endpoint, params=params)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
@@ -85,6 +85,6 @@ def test_get_booking_ids_empty_filters():
     """
     params = {"firstname": ""}
     response = requests.get(config_parser.booking_endpoint, params=params)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"

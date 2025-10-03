@@ -13,7 +13,7 @@ def test_partial_update_firstname_lastname(auth_token, booking_id):
 
     response = requests.patch(f"{config_parser.booking_endpoint}/{booking_id}", json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert body["firstname"] == "James", f"Booking firstname was not updated"
     assert body["lastname"] == "Brown", f"Booking lastname was not updated"
@@ -27,7 +27,7 @@ def test_partial_update_totalprice(auth_token, booking_id):
 
     response = requests.patch(f"{config_parser.booking_endpoint}/{booking_id}", json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert body["totalprice"] == 555, f"Booking totalprice was not updated"
 
@@ -52,7 +52,7 @@ def test_partial_update_with_basic_auth(booking_id):
 
     response = requests.patch(f"{config_parser.booking_endpoint}/{booking_id}", json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert body["firstname"] == "Mike", f"Booking firstname was not updated with basic auth"
 
@@ -64,7 +64,7 @@ def test_partial_update_not_found(auth_token):
     headers = {"Content-Type": "application/json", "Cookie": f"token={auth_token}"}
 
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
-    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     existing_ids_length = len(get_all_booking_ids.json())
 
     response = requests.patch(f"{config_parser.booking_endpoint}/{existing_ids_length + 99999999999}", json=payload, headers=headers)

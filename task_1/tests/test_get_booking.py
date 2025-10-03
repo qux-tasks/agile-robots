@@ -19,7 +19,7 @@ def test_get_booking_by_id():
 
     for i in testing_data:
         response = requests.get(f"{config_parser.booking_endpoint}/{i["bookingid"]}")
-        assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+        assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
         body = response.json()
         assert "firstname" in body, f"Response body does not contain 'firstname': {body}"
@@ -61,7 +61,7 @@ def test_get_booking_with_accept_header(accept_type):
     headers = {"Accept": accept_type}
     response = requests.get(f"{config_parser.booking_endpoint}/{get_first_id}", headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     if accept_type == "application/json":
         assert response.headers["Content-Type"].startswith("application/json"), "Server does not support JSON"
         body = response.json()
