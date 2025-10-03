@@ -14,7 +14,7 @@ def test_auth_success():
     payload = {"username": config_parser.username, "password": config_parser.password}
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json=payload)
 
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200. Reason: {response.reason}"
 
     body = response.json()
     assert "token" in body, body["reason"]
