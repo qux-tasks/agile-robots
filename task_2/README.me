@@ -1,0 +1,21 @@
+Initial setup:
+    `python3 -m venv venv`
+
+    `source venv/bin/activate` (Ubuntu / macOS)
+    `venv\Scripts\activate` (Windows)
+
+    `pip3 install -r requirements.txt`
+    `playwright install`
+    `playwright install-deps`
+
+To run tests:
+    All tests:
+        `pytest -v -s --html=reports/report.html --self-contained-html`
+    Some test:
+        `pytest tests/test_login.py::test_successful_login -s -v --html=reports/report.html --self-contained-html`
+    Tests by tags:
+        pytest -m ui --html=reports/report.html --self-contained-html
+        pytest -m auth --html=reports/report.html --self-contained-html
+
+    NOTE:
+        `--html=reports/report.html --self-contained-html` is needed for reports creation
