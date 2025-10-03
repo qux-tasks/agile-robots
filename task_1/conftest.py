@@ -15,7 +15,7 @@ def auth_token() -> str:
     """
     payload = {"username": config_parser.username, "password": config_parser.password}
     response = requests.post(config_parser.auth_endpoint, json=payload)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200. Reason: {response.reason}"
     return response.json().get("token", None)
 
 
@@ -36,5 +36,5 @@ def booking_id() -> int:
         "additionalneeds": "Dinner"
     }
     response = requests.post(config_parser.booking_endpoint, json=payload)
-    assert response.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Response was not 200. Reason: {response.reason}"
     return response.json().get("bookingid", None)

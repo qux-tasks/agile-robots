@@ -12,7 +12,7 @@ def test_create_booking_success():
     payload = build_booking_payload()
     response = requests.post(config_parser.booking_endpoint, json=payload)
 
-    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
     body = response.json()
 
     assert "bookingid" in body, f"Response bode does not contain 'bookingid': {body}"
@@ -35,7 +35,7 @@ def test_create_booking_without_additionalneeds():
     payload.pop("additionalneeds")
     response = requests.post(config_parser.booking_endpoint, json=payload)
 
-    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
     body = response.json()
     assert "bookingid" in body, f"Response bode does not contain 'bookingid': {body}"
     assert "booking" in body, f"Response bode does not contain 'booking': {body}"
@@ -49,7 +49,7 @@ def test_create_booking_with_accept_xml():
     headers = {"Accept": "application/xml", "Content-Type": "application/json"}
     response = requests.post(config_parser.booking_endpoint, json=payload, headers=headers)
 
-    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got {response.status_code}"
+    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
     assert response.headers["Content-Type"].startswith("text/xml"), f"Not expected Content-Type: {response.headers["Content-Type"]}"
 
 @pytest.mark.parametrize("field,value", [
