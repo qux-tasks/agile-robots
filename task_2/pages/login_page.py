@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+from object_maps.login_page import Login_Page_Objects
 
 
 class Users:
@@ -26,23 +27,23 @@ class LoginPage:
 
     def __init__(self, page: Page):
         self.page = page
-        self.username_input = page.locator("input[name='username']")
-        self.password_input = page.locator("input[name='password']")
-        self.login_button = page.locator("button[type='submit']")
-        self.error_message = page.locator(".oxd-alert-content-text")
-        self.logo = page.locator(".orangehrm-login-branding")
-        self.branding = page.locator("img[alt='company-branding']")
-        self.login_title = page.locator(".orangehrm-login-title")
-        self.credentials_info = page.locator(".orangehrm-demo-credentials")
-        self.forgot_password_link = page.locator(".orangehrm-login-forgot")
-        self.company_link = page.locator(".orangehrm-login-footer a", has_text="OrangeHRM, Inc")
-        self.footer = page.locator(".orangehrm-login-footer")
-        self.username_group = page.locator(".oxd-input-group").nth(0)
-        self.password_group = page.locator(".oxd-input-group").nth(1)
-        self.username_required = self.username_group.locator(".oxd-input-field-error-message")
-        self.password_required = self.password_group.locator(".oxd-input-field-error-message")
-        self.all_required_messages = page.locator(".oxd-input-field-error-message")
-        self.dashboard_header = page.locator(".oxd-topbar-header-breadcrumb")
+        self.username_input = page.locator(Login_Page_Objects.USER_INPUT_FIELD)
+        self.password_input = page.locator(Login_Page_Objects.PWD_INPUT_FIELD)
+        self.login_button = page.locator(Login_Page_Objects.LOGIN_BUTTON)
+        self.error_message = page.locator(Login_Page_Objects.LOGIN_ERROR_MESSAGE)
+        self.logo = page.locator(Login_Page_Objects.LOGO)
+        self.branding = page.locator(Login_Page_Objects.BRANDING_IMAGE)
+        self.login_title = page.locator(Login_Page_Objects.LOGIN_TITLE)
+        self.credentials_info = page.locator(Login_Page_Objects.CREDENTIALS_INFO)
+        self.forgot_password_link = page.locator(Login_Page_Objects.FORGOT_PWD_LINK)
+        self.company_link = page.locator(Login_Page_Objects.COMPANY_LINK, has_text="OrangeHRM, Inc")
+        self.footer = page.locator(Login_Page_Objects.FOOTER)
+        self.username_group = page.locator(Login_Page_Objects.USERNAME_PWD_GROUP).nth(0)
+        self.password_group = page.locator(Login_Page_Objects.USERNAME_PWD_GROUP).nth(1)
+        self.username_required = self.username_group.locator(Login_Page_Objects.USERNAME_PWD_REQUIRED)
+        self.password_required = self.password_group.locator(Login_Page_Objects.USERNAME_PWD_REQUIRED)
+        self.all_required_messages = page.locator(Login_Page_Objects.USERNAME_PWD_REQUIRED)
+        self.dashboard_header = page.locator(Login_Page_Objects.DASHBOARD_HEADER)
 
     def open(self):
         self.page.goto(self.URL)
@@ -53,7 +54,7 @@ class LoginPage:
         self.password_input.fill(password)
         self.login_button.click()
 
-    def click_login(self):
+    def click_login_button(self):
         self.login_button.click()
 
     def click_forgot_password(self):

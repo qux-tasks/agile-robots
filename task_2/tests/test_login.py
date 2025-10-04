@@ -1,5 +1,6 @@
 import pytest
 from pages.login_page import LoginPage, Users, Messages
+from object_maps.login_page import Login_Page_Objects
 from playwright.sync_api import expect
 import random
 import string
@@ -21,7 +22,7 @@ class TestLoginUI:
 
     def test_page_text_content(self, login_page):
         login_page.expect_correct_texts()
-        login_page.credentials_info.locator("xpath=//text()[contains(.,'Username')]")
+        login_page.credentials_info.locator(Login_Page_Objects.CREDENTIALS_INFO)
         expect(login_page.credentials_info).to_contain_text("Admin")
         expect(login_page.credentials_info).to_contain_text("Password")
 
@@ -72,7 +73,7 @@ class TestLoginFunctionality:
         expect(login_page.password_required).to_contain_text(Messages.REQUIRED)
 
     def test_empty_username_and_password(self, login_page):
-        login_page.click_login()
+        login_page.click_login_button()
         login_page.expect_required_messages_visible()
 
         login_page.enter_username("Admin")
@@ -88,7 +89,7 @@ class TestLoginFunctionality:
         expect(login_page.page).to_have_url(
             "https://opensource-demo.orangehrmlive.com/web/index.php/auth/requestPasswordResetCode"
         )
-        expect(login_page.page.locator("h6")).to_have_text("Reset Password")
+        expect(login_page.page.locator(Login_Page_Objects.FORGOT_PWD_PAGE_LOCATOR)).to_have_text("Reset Password")
 
     def test_company_link_navigation(self, login_page):
         new_page = login_page.click_company_link()
@@ -113,11 +114,11 @@ class TestSecurity:
         long_password = base
         login_page.login(long_username, long_password)
 
-        assert not page.locator(".oxd-topbar-header-breadcrumb").is_visible()
+        assert not page.locator(Login_Page_Objects.TOPBAR_LOCATOR).is_visible()
         assert page.url.startswith(LoginPage.URL)
 
-        if page.locator(".oxd-alert-content-text").count() > 0:
-            msg = page.locator(".oxd-alert-content-text").inner_text()
+        if page.locator(Login_Page_Objects.ALERT_CONTENT_LOCATOR).count() > 0:
+            msg = page.locator(Login_Page_Objects.ALERT_CONTENT_LOCATOR).inner_text()
             assert len(msg) < 500 
 
 
