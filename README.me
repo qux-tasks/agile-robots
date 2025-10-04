@@ -10,45 +10,18 @@ GENERAL
     in the root directories of the projects.
 
 TASK 1
-In this task, I have left a number of tests that will fail. This is due to documentation that is not 
-entirely accurate and requires clarification, as well as my personal perception. Below, I will describe 
-each failing test and the reason for its failure:
+In this task, there were a vast number of errors in the API's behavior. Therefore, I proceeded as follows:
 
-* `tests/test_auth.py::test_auth_wrong_content_type`
-    The documentation for this functionality states that the content type must be `application/json`. 
-    However, when I use `text/plain`, a 200 status code is returned, which seems illogical. In a real 
-    project, I would clarify this point.
+PASS tests - These are the tests that work correctly, and I am confident about them.
+FAIL tests - These tests fail due to defects in the API's operation.
+SKIPPED tests - For the most part, these also fail, largely due to API defects. However, I am uncertain about the 
+specific expected status code for these tests. The documentation omits this information, and in all cases, it's a 
+debatable point, so these codes need to be clarified.
 
-* `tests/test_auth.py::test_auth_empty_headers`
-    This is not explicitly stated in the documentation. However, I added a check for empty headers, 
-    expecting some kind of error. Instead, I see a 200 status code. Again, this should be clarified.
-
-* `tests/test_create_booking.py::test_create_booking_with_accept_xml`
-    The documentation states that the `Accept` value can be `application/xml`. However, this test 
-    fails, which contradicts the documentation. Clarification is needed.
-
-* `tests/test_create_booking.py::test_create_booking_invalid_data[totalprice-abc]`
-* `tests/test_create_booking.py::test_create_booking_invalid_data[depositpaid-not_boolean]`
-* `tests/test_create_booking.py::test_create_booking_invalid_data[bookingdates-value2]`
-    In these test cases, I create a booking with invalid data. However, a 200 status code is returned, 
-    which I find illogical. Clarification is required.
-
-* `tests/test_get_booking_ids.py::test_get_booking_ids_invalid_date[01-01-2023]`
-    The documentation explicitly states the date format as `CCYY-MM-DD`. However, a 200 status code is 
-    returned when using an invalid format. This clearly violates the documentation.
-
-* `tests/test_partial_update_booking.py::test_partial_update_invalid_data[totalprice-abc]`
-* `tests/test_partial_update_booking.py::test_partial_update_invalid_data[depositpaid-yes]`
-* `tests/test_partial_update_booking.py::test_partial_update_invalid_data[bookingdates-value2]`
-* `tests/test_update_booking.py::test_update_booking_invalid_data[totalprice-abc]`
-* `tests/test_update_booking.py::test_update_booking_invalid_data[depositpaid-not_bool]`
-* `tests/test_update_booking.py::test_update_booking_invalid_data[bookingdates-value2]`
-    In these test cases, I attempt to update a booking with invalid data. However, I receive a 200 status 
-    code, which I consider illogical.
-
-One way or another, most of the assertions require clarification. However, I set up all the checks with 
-the understanding that they need to be clarified.
-
+Furthermore, I intentionally did not write tests for various token-related scenarios because I don't know what the 
+expected result should be. Examples of such unwritten tests include: working with expired tokens (the functionality 
+is not described), stress testing (e.g., sending a huge number of requests from a single token), a large volume of 
+token requests (how the server should behave), and so on.
 
 TASK 2
 The testing was performed using the python/playwright/pytest stack.
