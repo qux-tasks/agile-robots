@@ -13,7 +13,6 @@ class Login_Page_Objects:
     USERNAME_PWD_GROUP = ".oxd-input-group"
     USERNAME_PWD_REQUIRED = ".oxd-input-field-error-message"
     DASHBOARD_HEADER = ".oxd-topbar-header-breadcrumb"
-    CREDENTIALS_INFO_2 = "xpath=//text()[contains(.,'Username')]"
     FORGOT_PWD_PAGE_LOCATOR = "h6"
     TOPBAR_LOCATOR = ".oxd-topbar-header-breadcrumb"
     ALERT_CONTENT_LOCATOR = ".oxd-alert-content-text"
