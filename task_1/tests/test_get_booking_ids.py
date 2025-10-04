@@ -27,6 +27,7 @@ def test_get_booking_ids_by_name():
     assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
     body = response.json()
+    assert len(body) > 0, "No bookings returned from the service"
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
     if body:
         for i in body:

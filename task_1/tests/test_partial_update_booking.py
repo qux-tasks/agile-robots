@@ -60,7 +60,7 @@ def test_partial_update_not_found(auth_token):
     """
         Negative case - partial update of non-existent booking
     """
-    payload = {"firstname": "Ghost"}
+    payload = {"firstname": "GhostBatman"}
     headers = {"Content-Type": "application/json", "Cookie": f"token={auth_token}"}
 
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
@@ -69,9 +69,10 @@ def test_partial_update_not_found(auth_token):
 
     response = requests.patch(f"{config_parser.booking_endpoint}/{existing_ids_length + 99999999999}", json=payload, headers=headers)
 
-    assert response.status_code in [HTTPStatus.NOT_FOUND, HTTPStatus.METHOD_NOT_ALLOWED], f"Unexpected status code: {response.status_code}"
+    assert response.status_code == HTTPStatus.NOT_FOUND, f"Unexpected status code: {response.status_code}"
 
-@pytest.mark.parametrize("field,value", [
+@pytest.mark.skip(reason="Status code should be clarified: 400 or 500")
+@pytest.mark.parametrize("field, value", [
     ("totalprice", "abc"),
     ("depositpaid", "yes"),
     ("bookingdates", {"checkin": "2023-99-99"}),

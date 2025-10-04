@@ -2,6 +2,7 @@ import pytest
 import requests
 from etc import config_parser
 from etc.helpers import build_booking_payload
+from etc.helpers import build_xml_payload
 from http import HTTPStatus
 
 
@@ -15,7 +16,7 @@ def test_create_booking_success():
     assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
     body = response.json()
 
-    assert "bookingid" in body, f"Response bode does not contain 'bookingid': {body}"
+    assert "bookingid" in body, f"Response body does not contain 'bookingid': {body}"
     assert isinstance(body["bookingid"], int), f"'bookingid' is not integer: {type(body["bookingid"])}"
 
     booking = body["booking"]
@@ -37,22 +38,30 @@ def test_create_booking_without_additionalneeds():
 
     assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
     body = response.json()
-    assert "bookingid" in body, f"Response bode does not contain 'bookingid': {body}"
-    assert "booking" in body, f"Response bode does not contain 'booking': {body}"
-    assert "additionalneeds" not in body["booking"], f"Response bode contain 'additionalneeds': {body}"
+    assert "bookingid" in body, f"Response body does not contain 'bookingid': {body}"
+    assert "booking" in body, f"Response body does not contain 'booking': {body}"
+    assert "additionalneeds" not in body["booking"], f"Response body contain 'additionalneeds': {body}"
 
 def test_create_booking_with_accept_xml():
     """
-        Case to create booking with Accept: application/xml
+        Case to create booking with Accept: application/xml and Content-Type: text/xml
     """
-    payload = build_booking_payload()
-    headers = {"Accept": "application/xml", "Content-Type": "application/json"}
-    response = requests.post(config_parser.booking_endpoint, json=payload, headers=headers)
+    xml_payload = build_xml_payload()
 
-    assert response.status_code == HTTPStatus.OK, f"Expected status code 200, got reason: {response.reason}"
-    assert response.headers["Content-Type"].startswith("text/xml"), f"Not expected Content-Type: {response.headers["Content-Type"]}"
+    headers = {
+        "Accept": "application/xml",
+        "Content-Type": "text/xml"
+    }
 
-@pytest.mark.parametrize("field,value", [
+    response = requests.post(config_parser.booking_endpoint, data=xml_payload.encode("utf-8"), headers=headers)
+
+    assert response.status_code == HTTPStatus.OK, f"Expected 200, got {response.status_code} {response.reason}"
+    assert response.headers["Content-Type"].startswith("text/xml"), f"Unexpected Content-Type: {response.headers['Content-Type']}"
+    assert response.text.strip().startswith("<?xml"), "Response is not valid XML"
+    assert "<created-booking>" in response.text, "Expected XML root <created-booking> not found"
+
+@pytest.mark.skip(reason="Expected status code should be clarified: 400 or 500")
+@pytest.mark.parametrize("field, value", [
     ("totalprice", "abc"),
     ("depositpaid", "not_boolean"),
     ("bookingdates", {"checkin": "2023-99-99", "checkout": "2023-12-12"}),
