@@ -10,6 +10,7 @@ def test_get_booking_by_id():
     """
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
     assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
+    assert len(get_all_booking_ids.json()) > 0, "No bookings returned from th service"
 
     testing_data = [
         get_all_booking_ids.json()[0],
@@ -67,7 +68,8 @@ def test_get_booking_with_accept_header(accept_type):
         body = response.json()
         assert isinstance(body, dict), f"Response body is not a JSON object: {body}"
     elif accept_type == "application/xml":
-        assert response.headers["Content-Type"].startswith("application/xml"), "Server does not support XML"
+        assert response.headers["Content-Type"].startswith("application/xml"), f"Unexpected Content-Type: {response.headers["Content-Type"]}"
+        assert response.text.startswith("<?xml"), "Server does not support XML"
 
 @pytest.mark.parametrize("invalid_id", [0, -1])
 def test_get_booking_edge_case_ids(invalid_id):

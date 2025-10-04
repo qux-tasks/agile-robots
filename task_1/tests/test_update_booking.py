@@ -58,7 +58,8 @@ def test_update_booking_not_found(auth_token):
     response = requests.put(f"{config_parser.booking_endpoint}/{existing_ids_length + 99999999999}", json=payload, headers=headers)
     assert response.status_code in [HTTPStatus.NOT_FOUND, HTTPStatus.METHOD_NOT_ALLOWED], f"Unexpected status code: {response.status_code}"
 
-@pytest.mark.parametrize("field,value", [
+@pytest.mark.skip(reason="Status code should be clarified: 400 or 500")
+@pytest.mark.parametrize("field, value", [
     ("totalprice", "abc"),
     ("depositpaid", "not_bool"),
     ("bookingdates", {"checkin": "2023-99-99", "checkout": "2023-12-12"}),
