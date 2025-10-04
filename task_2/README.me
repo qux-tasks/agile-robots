@@ -10,9 +10,9 @@ Initial setup:
 
 To run tests:
     All tests:
-        `pytest -v -s --html=reports/report.html --self-contained-html`
+        `pytest --html=reports/report.html --self-contained-html`
     Some test:
-        `pytest tests/test_login.py::test_successful_login -s -v --html=reports/report.html --self-contained-html`
+        `pytest tests/test_login.py::test_successful_login --html=reports/report.html --self-contained-html`
     Tests by tags:
         pytest -m ui --html=reports/report.html --self-contained-html
         pytest -m auth --html=reports/report.html --self-contained-html
