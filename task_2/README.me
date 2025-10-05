@@ -8,14 +8,16 @@ Initial setup:
     `playwright install`
     `playwright install-deps`
 
+Regular setup:
+    `source venv/bin/activate` (Ubuntu / macOS)
+    `venv\Scripts\activate` (Windows)
+    `pytest`
+
 To run tests:
     All tests:
-        `pytest --html=reports/report.html --self-contained-html`
+        `pytest`
     Some test:
-        `pytest tests/test_login.py::test_successful_login --html=reports/report.html --self-contained-html`
+        `pytest tests/test_login.py::test_successful_login`
     Tests by tags:
-        pytest -m ui --html=reports/report.html --self-contained-html
-        pytest -m auth --html=reports/report.html --self-contained-html
-
-    NOTE:
-        `--html=reports/report.html --self-contained-html` is needed for reports creation
+        `pytest -m ui`
+        `pytest -m auth`

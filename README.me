@@ -9,6 +9,8 @@ GENERAL
 - It is highly recommended to set up the environment using the corresponding README.md files located 
     in the root directories of the projects.
 
+============================================================
+
 TASK 1
 In this task, there were a vast number of errors in the API's behavior. Therefore, I proceeded as follows:
 
@@ -23,6 +25,12 @@ expected result should be. Examples of such unwritten tests include: working wit
 is not described), stress testing (e.g., sending a huge number of requests from a single token), a large volume of 
 token requests (how the server should behave), and so on.
 
+CONCLUSION: The API partially meet business expectations (but it should be clarified, because I didn't see full r
+equirements list and don't know all details) but has a lot of defects. It works incorrectly, not securely. 
+It's okay for development process, but it's not okay for some release =)
+
+============================================================
+
 TASK 2
 The testing was performed using the python/playwright/pytest stack.
 Currently, two test cases are failing, clearly due to defects. These are common scenarios: leading/trailing 
@@ -34,3 +42,6 @@ switch to a different language, even though my system language is set to English
 10 tests might fail, as they verify the correctness of various labels and texts based specifically on the 
 English language. In one instance, the language changed to Spanish (or Portuguese), and in another, to Chinese. 
 This is also something to keep in mind.
+
+CONCLUSION: The login form works, but has at least 2 critical defects (2 failed test cases). Also, there is one 
+defect about page language changing. I will not recommend it for release =)
