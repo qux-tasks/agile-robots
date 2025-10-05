@@ -6,16 +6,18 @@ Initial setup:
 
     `pip3 install -r requirements.txt`
 
+Regular setup:
+    `source venv/bin/activate` (Ubuntu / macOS)
+    `venv\Scripts\activate` (Windows)
+    `pytest`
+
 To run tests:
     All tests:
-        `pytest --html=reports/report.html --self-contained-html`
+        `pytest`
     Tests from suite:
-        `pytest tests/test_create_booking.py --html=reports/report.html --self-contained-html`
+        `pytest tests/test_create_booking.py`
     Some test:
-        `pytest tests/test_create_booking.py::test_create_booking_success --html=reports/report.html --self-contained-html`
-
-    NOTE:
-        `--html=reports/report.html --self-contained-html` is needed for reports creation
+        `pytest tests/test_create_booking.py::test_create_booking_success`
 
 To stop virtual environment:
     `deactivate`

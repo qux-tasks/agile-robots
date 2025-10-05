@@ -1,3 +1,9 @@
+# Python related files
 __pycache__/
-.DS_Store
 .pytest_cache/
+
+# IDE related files
+.DS_Store
+
+# Report files
+**/report*.html
