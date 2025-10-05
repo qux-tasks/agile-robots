@@ -8,7 +8,7 @@ from http import HTTPStatus
 
 def test_create_booking_success():
     """
-        Positive case to create a new booking
+        Positive case - new booking creation with valid data
     """
     payload = build_booking_payload()
     response = requests.post(config_parser.booking_endpoint, json=payload)
@@ -30,7 +30,7 @@ def test_create_booking_success():
 
 def test_create_booking_without_additionalneeds():
     """
-        Case to create a booking without additionalneeds field
+        Positive case - booking creation without 'additionalneeds' field
     """
     payload = build_booking_payload(additionalneeds=None)
     payload.pop("additionalneeds")
@@ -44,7 +44,7 @@ def test_create_booking_without_additionalneeds():
 
 def test_create_booking_with_accept_xml():
     """
-        Case to create booking with Accept: application/xml and Content-Type: text/xml
+        Positive case - booking creation with Accept: application/xml and Content-Type: text/xml
     """
     xml_payload = build_xml_payload()
 
@@ -68,7 +68,7 @@ def test_create_booking_with_accept_xml():
 ])
 def test_create_booking_invalid_data(field, value):
     """
-        Case with invalid data types for fields
+        Negative case - booking creation with invalid data types for fields
     """
     payload = build_booking_payload()
     payload[field] = value
@@ -78,7 +78,7 @@ def test_create_booking_invalid_data(field, value):
 @pytest.mark.parametrize("missing_field", ["firstname", "lastname", "totalprice", "depositpaid", "bookingdates"])
 def test_create_booking_missing_required_fields(missing_field):
     """
-        negative case with missing required fields
+        Negative case - booking creation with missing required fields
     """
     payload = build_booking_payload()
     payload.pop(missing_field)

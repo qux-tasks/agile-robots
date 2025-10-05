@@ -6,7 +6,7 @@ from http import HTTPStatus
 
 def test_get_booking_by_id():
     """
-        Positive case to get booking by valid ID
+        Positive case - getting booking by valid ID
     """
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
     assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
@@ -34,7 +34,7 @@ def test_get_booking_by_id():
 
 def test_get_booking_invalid_id():
     """
-        Negative case with non-existing booking ID
+        Negative case - geeting booking with non-existing booking ID
     """
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
     assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
@@ -45,7 +45,7 @@ def test_get_booking_invalid_id():
 
 def test_get_booking_non_numeric_id():
     """
-        Negative case with non-numeric booking ID
+        Negative case - getting booking with non-numeric booking ID
     """
     response = requests.get(f"{config_parser.booking_endpoint}/abc")
     assert response.status_code == HTTPStatus.NOT_FOUND, f"Boking with non-existing ID returned"
@@ -53,7 +53,7 @@ def test_get_booking_non_numeric_id():
 @pytest.mark.parametrize("accept_type", ["application/json", "application/xml"])
 def test_get_booking_with_accept_header(accept_type):
     """
-        Positive case with different Accept headers
+        Positive case - getting booking with different Accept headers
     """
     get_all_booking_ids = requests.get(config_parser.booking_endpoint)
     assert get_all_booking_ids.status_code == HTTPStatus.OK, f"Response was not 200: {response.status_code}"
@@ -74,7 +74,7 @@ def test_get_booking_with_accept_header(accept_type):
 @pytest.mark.parametrize("invalid_id", [0, -1])
 def test_get_booking_edge_case_ids(invalid_id):
     """
-        Negative case with edge case IDs
+        Negative case - getting booking with edge case IDs
     """
     response = requests.get(f"{config_parser.booking_endpoint}/{invalid_id}")
     assert response.status_code == HTTPStatus.NOT_FOUND, f"Boking with non-existing ID returned"
