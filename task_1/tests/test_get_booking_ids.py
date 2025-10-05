@@ -16,7 +16,7 @@ def test_get_all_booking_ids():
     if body:
         for i in body:
             assert "bookingid" in i, f"'bookingid' was not found in item {i}"
-            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i["bookingid"])}"
+            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i['bookingid'])}"
 
 def test_get_booking_ids_by_name():
     """
@@ -32,7 +32,7 @@ def test_get_booking_ids_by_name():
     if body:
         for i in body:
             assert "bookingid" in i, f"'bookingid' was not found in item {i}"
-            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i["bookingid"])}"
+            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i['bookingid'])}"
 
 def test_get_booking_ids_by_checkin_checkout():
     """
@@ -47,7 +47,7 @@ def test_get_booking_ids_by_checkin_checkout():
     if body:
         for i in body:
             assert "bookingid" in i, f"'bookingid' was not found in item {i}"
-            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i["bookingid"])}"
+            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i['bookingid'])}"
 
 def test_get_booking_ids_combined_filters():
     """
@@ -67,7 +67,7 @@ def test_get_booking_ids_combined_filters():
     if body:
         for i in body:
             assert "bookingid" in i, f"'bookingid' was not found in item {i}"
-            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i["bookingid"])}"
+            assert isinstance(i["bookingid"], int), f"'bookingid' is not integer: {type(i['bookingid'])}"
 
 @pytest.mark.parametrize("invalid_date", ["2022-99-99", "abcd-ef-gh", "01-01-2023"])
 def test_get_booking_ids_invalid_date(invalid_date):

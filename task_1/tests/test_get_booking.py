@@ -19,7 +19,7 @@ def test_get_booking_by_id():
     ]
 
     for i in testing_data:
-        response = requests.get(f"{config_parser.booking_endpoint}/{i["bookingid"]}")
+        response = requests.get(f"{config_parser.booking_endpoint}/{i['bookingid']}")
         assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
 
         body = response.json()
@@ -28,8 +28,8 @@ def test_get_booking_by_id():
         assert "totalprice" in body, f"Response body does not contain 'totalprice': {body}"
         assert "depositpaid" in body, f"Response body does not contain 'depositpaid': {body}"
         assert "bookingdates" in body, f"Response body does not contain 'bookingdates': {body}"
-        assert "checkin" in body["bookingdates"], f"Response body does not contain 'checkin': {body["bookingdates"]}"
-        assert "checkout" in body["bookingdates"], f"Response body does not contain 'checkout': {body["bookingdates"]}"
+        assert "checkin" in body["bookingdates"], f"Response body does not contain 'checkin': {body['bookingdates']}"
+        assert "checkout" in body["bookingdates"], f"Response body does not contain 'checkout': {body['bookingdates']}"
         assert "additionalneeds" in body, f"Response body does not contain 'additionalneeds': {body}"
 
 def test_get_booking_invalid_id():
@@ -68,7 +68,7 @@ def test_get_booking_with_accept_header(accept_type):
         body = response.json()
         assert isinstance(body, dict), f"Response body is not a JSON object: {body}"
     elif accept_type == "application/xml":
-        assert response.headers["Content-Type"].startswith("application/xml"), f"Unexpected Content-Type: {response.headers["Content-Type"]}"
+        assert response.headers["Content-Type"].startswith("application/xml"), f"Unexpected Content-Type: {response.headers['Content-Type']}"
         assert response.text.startswith("<?xml"), "Server does not support XML"
 
 @pytest.mark.parametrize("invalid_id", [0, -1])
