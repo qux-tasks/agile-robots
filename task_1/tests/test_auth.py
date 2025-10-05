@@ -19,8 +19,8 @@ def test_auth_success():
 
     body = response.json()
     assert "token" in body, body["reason"]
-    assert isinstance(body["token"], str), f"Token has unexpected type: {type(body["token"])}"
-    assert len(body["token"]) > 0, f"Token has unexpected length: {len(body["token"])}"
+    assert isinstance(body["token"], str), f"Token has unexpected type: {type(body['token'])}"
+    assert len(body["token"]) > 0, f"Token has unexpected length: {len(body['token'])}"
 
 @pytest.mark.parametrize("username, password", [
     ("wrongUser", "password123"),

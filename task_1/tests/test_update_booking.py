@@ -15,12 +15,12 @@ def test_update_booking_success(auth_token, booking_id):
 
     assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
-    assert body["firstname"] == payload["firstname"], f"Booking firstname was not updated: {body["firstname"]}"
-    assert body["lastname"] == payload["lastname"], f"Booking lastname was not updated: {body["lastname"]}"
-    assert body["totalprice"] == payload["totalprice"], f"Booking totalprice was not updated: {body["totalprice"]}"
-    assert body["depositpaid"] == payload["depositpaid"], f"Booking depositpaid was not updated: {body["depositpaid"]}"
-    assert body["bookingdates"]["checkin"] == payload["bookingdates"]["checkin"], f"Booking checkin was not updated: {body["bookingdates"]["checkin"]}"
-    assert body["bookingdates"]["checkout"] == payload["bookingdates"]["checkout"], f"Booking checkout was not updated: {body["bookingdates"]["checkout"]}"
+    assert body["firstname"] == payload["firstname"], f"Booking firstname was not updated: {body['firstname']}"
+    assert body["lastname"] == payload["lastname"], f"Booking lastname was not updated: {body['lastname']}"
+    assert body["totalprice"] == payload["totalprice"], f"Booking totalprice was not updated: {body['totalprice']}"
+    assert body["depositpaid"] == payload["depositpaid"], f"Booking depositpaid was not updated: {body['depositpaid']}"
+    assert body["bookingdates"]["checkin"] == payload["bookingdates"]["checkin"], f"Booking checkin was not updated: {body['bookingdates']['checkin']}"
+    assert body["bookingdates"]["checkout"] == payload["bookingdates"]["checkout"], f"Booking checkout was not updated: {body['bookingdates']['checkout']}"
 
 def test_update_booking_without_auth(booking_id):
     """

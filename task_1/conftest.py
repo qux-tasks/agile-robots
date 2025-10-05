@@ -25,8 +25,8 @@ def booking_id() -> int:
         Create new booking and getting its ID
     """
     payload = {
-        "firstname": "John",
-        "lastname": "Doe",
+        "firstname": "John-Batman",
+        "lastname": "Doe-Supermanovich",
         "totalprice": 150,
         "depositpaid": True,
         "bookingdates": {

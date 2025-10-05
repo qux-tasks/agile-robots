@@ -17,15 +17,15 @@ def test_create_booking_success():
     body = response.json()
 
     assert "bookingid" in body, f"Response body does not contain 'bookingid': {body}"
-    assert isinstance(body["bookingid"], int), f"'bookingid' is not integer: {type(body["bookingid"])}"
+    assert isinstance(body["bookingid"], int), f"'bookingid' is not integer: {type(body['bookingid'])}"
 
     booking = body["booking"]
     assert booking["firstname"] == payload["firstname"], f"Expected firstname {payload['firstname']}, got {booking['firstname']}"
     assert booking["lastname"] == payload["lastname"], f"Expected lastname {payload['lastname']}, got {booking['lastname']}"
     assert booking["totalprice"] == payload["totalprice"], f"Expected totalprice {payload['totalprice']}, got {booking['totalprice']}"
     assert booking["depositpaid"] == payload["depositpaid"], f"Expected depositpaid {payload['depositpaid']}, got {booking['depositpaid']}"
-    assert booking["bookingdates"]["checkin"] == payload["bookingdates"]["checkin"], f"Expected checkin date {payload["bookingdates"]["checkin"]}, got {booking["bookingdates"]["checkin"]}"
-    assert booking["bookingdates"]["checkout"] == payload["bookingdates"]["checkout"], f"Expected checkout date {payload["bookingdates"]["checkout"]}, got {booking["bookingdates"]["checkout"]}"
+    assert booking["bookingdates"]["checkin"] == payload["bookingdates"]["checkin"], f"Expected checkin date {payload['bookingdates']['checkin']}, got {booking['bookingdates']['checkin']}"
+    assert booking["bookingdates"]["checkout"] == payload["bookingdates"]["checkout"], f"Expected checkout date {payload['bookingdates']['checkout']}, got {booking['bookingdates']['checkout']}"
     assert booking["additionalneeds"] == payload["additionalneeds"], f"Expected additionalneeds {payload['additionalneeds']}, got {booking['additionalneeds']}"
 
 def test_create_booking_without_additionalneeds():
