@@ -6,7 +6,7 @@ from http import HTTPStatus
 
 def test_get_all_booking_ids():
     """
-        Positive case without filters to get all booking IDs
+        Positive case - getting all bookings without filters to get all booking IDs
     """
     response = requests.get(config_parser.booking_endpoint)
     assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
@@ -20,7 +20,7 @@ def test_get_all_booking_ids():
 
 def test_get_booking_ids_by_name():
     """
-        Positive case with filter by firstname and lastname
+        Positive case - getting bookings with filter by firstname and lastname
     """
     params = {"firstname": "Josh", "lastname": "Allen"}
     response = requests.get(config_parser.booking_endpoint, params=params)
@@ -36,7 +36,7 @@ def test_get_booking_ids_by_name():
 
 def test_get_booking_ids_by_checkin_checkout():
     """
-        Positive case with filter by checkin and checkout dates
+        Positive case - getting bookings with filter by checkin and checkout dates
     """
     params = {"checkin": "2014-03-13", "checkout": "2014-05-21"}
     response = requests.get(config_parser.booking_endpoint, params=params)
@@ -51,7 +51,7 @@ def test_get_booking_ids_by_checkin_checkout():
 
 def test_get_booking_ids_combined_filters():
     """
-        Positive case with combined filters
+        Positive case - getting bookings with combined filters
     """
     params = {
         "firstname": "sally",
@@ -72,7 +72,7 @@ def test_get_booking_ids_combined_filters():
 @pytest.mark.parametrize("invalid_date", ["2022-99-99", "abcd-ef-gh", "01-01-2023"])
 def test_get_booking_ids_invalid_date(invalid_date):
     """
-        Negative case with invalid date format
+        Negative case - getting bookings with invalid date format
     """
     params = {"checkin": invalid_date}
     response = requests.get(config_parser.booking_endpoint, params=params)
@@ -82,10 +82,15 @@ def test_get_booking_ids_invalid_date(invalid_date):
 
 def test_get_booking_ids_empty_filters():
     """
-        Case with empty filters
+        Negative case - getting bookings with empty filters
+        TODO: Test behavior should be clarified:
+            1) If the service should return all bookings when empty filters are provided
+            2) If the service should return 400 Bad Request when empty filters are provided
+            3) If the service should return empty list when empty filters are provided
     """
     params = {"firstname": ""}
     response = requests.get(config_parser.booking_endpoint, params=params)
     assert response.status_code == HTTPStatus.OK, f"Response was not 200, got reason: {response.reason}"
     body = response.json()
     assert isinstance(body, list), f"Response body has wrong type: {type(body)}"
+    # assert len(body) > 0, "No bookings returned from the service"

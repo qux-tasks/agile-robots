@@ -10,7 +10,7 @@ HEADERS = {"Content-Type": "application/json"}
 
 def test_auth_success():
     """
-        Positive case
+        Positive case - auth with valid credentials
     """
     payload = helpers.build_user_payload(config_parser.username, config_parser.password)
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json=payload)
@@ -29,7 +29,7 @@ def test_auth_success():
 ])
 def test_auth_invalid_credentials(username, password):
     """
-        Case with invalid credentials
+        Negative case - auth with invalid credentials
     """
     payload = helpers.build_user_payload(username, password)
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json=payload)
@@ -42,7 +42,7 @@ def test_auth_invalid_credentials(username, password):
 
 def test_auth_empty_body():
     """
-        Case with empty body
+        Negative case - auth with empty body
     """
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json={})
 
@@ -55,7 +55,7 @@ def test_auth_empty_body():
 @pytest.mark.skip(reason="Should be clarified expected status code: 400 or 401")
 def test_auth_missing_username():
     """
-        Case without username
+        Negative case - auth without username
     """
     payload = {"password": config_parser.password}
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json=payload)
@@ -69,7 +69,7 @@ def test_auth_missing_username():
 @pytest.mark.skip(reason="Should be clarified expected status code: 400 or 401")
 def test_auth_missing_password():
     """
-        Case without password
+        Negative case - auth without password
     """
     payload = {"username": config_parser.username}
     response = requests.post(config_parser.auth_endpoint, headers=HEADERS, json=payload)
@@ -83,7 +83,7 @@ def test_auth_missing_password():
 @pytest.mark.skip(reason="Should be clarified expected status code: 400, or 415")
 def test_auth_wrong_content_type():
     """
-        Case with wrong Content-Type
+        Negative case - auth with wrong Content-Type
     """
     headers = {"Content-Type": "text/plain"}
     response = requests.post(config_parser.auth_endpoint, data="username=admin&password=password123", headers=headers)
@@ -92,7 +92,7 @@ def test_auth_wrong_content_type():
 @pytest.mark.skip(reason="Should be clarified expected status code: 400, 401, 415")
 def test_auth_empty_headers():
     """
-        Case with empty headers
+        Negative case - auth with empty headers
     """
     payload = helpers.build_user_payload(config_parser.username, config_parser.password)
     response = requests.post(config_parser.auth_endpoint, headers={}, json=payload)
